@@ -1,28 +1,12 @@
-import java.util.Random;
+import java.util.Scanner;
 
-public class Player {
-    private char ID;
-    private Square square;
+public class HumanPlayer extends Player{
 
-    public char getID() {
-        return ID;
-    }
-
-    public void setID(char ID) {
-        this.ID = ID;
-    }
-
-    public Square getSquare() {
-        return square;
-    }
-
-    public void setSquare(Square square) {
-        this.square = square;
-    }
-
+    @Override
     public boolean move(Board board) {
-        Random r = new Random();
-        int dice = r.nextInt(6) + 1;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please provide an integer between 1 and 6: ");
+        int dice = sc.nextInt();
         int finalPosition = board.getBoardArray()[0][0].getPosition();                   //Position in which the player wins the game
         int throwPosition = getSquare().getPosition() + dice;                            //Temporary position right after throw, without consideration for Delta
         System.out.printf("The player %s threw %d%n", this.toString(), dice);            //Purely cosmetic
@@ -43,11 +27,5 @@ public class Player {
             setSquare(board.reference(throwPosition + board.reference(throwPosition).getDelta()));
         }
         return getSquare().getPosition() == finalPosition;
-    }
-
-
-    @Override
-    public String toString() {
-        return String.valueOf(ID);
     }
 }
